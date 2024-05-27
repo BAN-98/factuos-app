@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductsResource\Pages;
 use App\Models\Products;
+use Filament\Actions\DeleteAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,9 +20,13 @@ class ProductsResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationGroup = "Facuras";
+    protected static ?string $navigationGroup = "Facturacion";
 
-    protected static ?string $navigationLabel = "Facturas";
+    protected static ?string $navigationLabel = "Productos";
+
+    protected static ?string $label = "Productos";
+
+
 
     public static function form(Form $form): Form
     {
@@ -50,6 +55,7 @@ class ProductsResource extends Resource
                     ->label('Nombre del Producto')
                     ->sortable()
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('price')
                     ->label('Precio del Producto')
                     ->searchable()
@@ -61,15 +67,12 @@ class ProductsResource extends Resource
                     ->searchable(),
             ])
             ->filters([
-                Tables\Filters\Filter::make('name')->label("nombre"),
-                Tables\Filters\Filter::make('price')->label('precio'),
-                Tables\Filters\Filter::make('description')
-                    ->label('Descripción del Producto')
+
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\AssociateAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
